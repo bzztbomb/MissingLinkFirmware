@@ -1,0 +1,32 @@
+This is sysex_boot by Alex Norman [http://www.x37v.info]
+
+REQUIREMENTS:
+	avr-gcc
+	portmidi
+	g++
+
+OVERVIEW:
+
+there are 2 components to this project, the avr_code and the uploader
+
+the avr_code needs to be loaded onto your microcontroller.. edit
+avr_code/bootloadercfg.h as appropriate [setting the bootloader entry condition, etc].
+
+the uploader takes binary files [see the example for main.bin] and uploads them to the
+microcontroller.
+
+make sure that your microcontroller is in bootloader mode and has both the midi
+ins and outs conected to your computer.
+
+
+EXAMPLE:
+
+once you've programmed your microcontroller and you've built your uploader do this:
+cd example/
+make
+cd ../uploader/
+./sysexupload ../example/main.bin
+
+this will prompt you for some information and then upload the example program
+to your microcontroller
+

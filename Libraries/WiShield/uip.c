@@ -32,7 +32,7 @@
 
  *****************************************************************************/
 
-#define DEBUG_PRINTF(...) /*printf(__VA_ARGS__)*/
+#define DEBUG_PRINTF(...) /* printf(__VA_ARGS__) */
 
 /**
  * \defgroup uip The uIP TCP/IP stack
@@ -1149,7 +1149,8 @@ uip_process(u8_t flag)
 
  udp_found:
   if (uip_udp_conn->rport == 0) {
-    uip_udp_conn->rport = UDPBUF->srcport;
+     uip_udp_conn->rport = UDPBUF->srcport;
+     uip_ipaddr_copy(uip_udp_conn->ripaddr, BUF->srcipaddr);
   }
   uip_conn = NULL;
   uip_flags = UIP_NEWDATA;
@@ -1913,6 +1914,12 @@ htons(u16_t val)
 {
   return HTONS(val);
 }
+
+void uip_udp_prep_buffer()
+{
+   uip_sappdata = uip_appdata = &uip_buf[UIP_LLH_LEN + UIP_IPUDPH_LEN];
+}
+
 /*---------------------------------------------------------------------------*/
 void
 uip_send(const void *data, int len)

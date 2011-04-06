@@ -44,8 +44,10 @@ extern "C" {
 
 class WiShield {
 	public:
-		void init();
+		void init(int async);
+      int continueInit();
 		void run();
+      void sendUdp();
 };
 
 extern WiShield WiFi;

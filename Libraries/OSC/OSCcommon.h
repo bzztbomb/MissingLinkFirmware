@@ -1,16 +1,16 @@
 /*
- 
+
  ArdOSC - OSC Library for Arduino.
- 
+
  -------- Lisence -----------------------------------------------------------
- 
+
  ArdOSC
- 
+
  The MIT License
- 
+
  Copyright (c) 2009 - 2010 recotana( http://recotana.com )　All right reserved
- 
- */	
+
+ */
 
 
 
@@ -22,7 +22,7 @@
 //#define _DEBUG_
 
 #define _USE_FLOAT_
-#define _USE_STRING_
+//#define _USE_STRING_
 
 
 
@@ -50,8 +50,8 @@ extern "C" {
 #define DBG_LOG(...)	Serial.print(__VA_ARGS__)
 
 #else
-#define DBG_LOGLN
-#define DBG_LOG
+#define DBG_LOGLN(...)
+#define DBG_LOG(...)
 #endif
 
 

@@ -41,12 +41,13 @@ extern "C" {
   #include "spi.h"
   void stack_init(void);
   void stack_process(void);
+  void stack_send_udp(void);
 }
 
 #include "WProgram.h"
 #include "WiShield.h"
 
-void WiShield::init()
+void WiShield::init(int async)
 {
 	zg_init();
 
@@ -61,17 +62,38 @@ void WiShield::init()
 	PCMSK0 |= (1<<PCINT0);
 #endif
 
-	while(zg_get_conn_state() != 1) {
-		zg_drv_process();
-	}
+   if (async == 0)
+   {
+      while(zg_get_conn_state() != 1) {
+         zg_drv_process();
+      }
 
-	stack_init();
+      stack_init();
+   }
+}
+
+int WiShield::continueInit()
+{
+   if (zg_get_conn_state() != 1)
+   {
+      zg_drv_process();
+      return 0;
+   } else {
+      stack_init();
+      return 1;
+   }
 }
 
 void WiShield::run()
 {
 	stack_process();
 	zg_drv_process();
+}
+
+void WiShield::sendUdp()
+{
+   stack_send_udp();
+   zg_drv_process();
 }
 
 #if defined USE_DIG8_INTR && !defined APP_WISERVER

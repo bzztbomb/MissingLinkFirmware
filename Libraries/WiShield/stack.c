@@ -159,7 +159,15 @@ void stack_process(void)
 	return;
 }
 
+void stack_send_udp()
+{
+   uip_process(UIP_UDP_SEND_CONN);
+   uip_arp_out();
+   network_send();
+}
+
 void uip_log(char *m)
 {
+   //	printf(m);
 	//TODO: Get debug information out here somehow, does anybody know a smart way to do that?
 }

@@ -1627,6 +1627,7 @@ u16_t uip_tcpchksum(void);
  */
 u16_t uip_udpchksum(void);
 
+void uip_udp_prep_buffer();
 
 #endif /* __UIP_H__ */
 
