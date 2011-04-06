@@ -163,10 +163,10 @@ void midi_process_byte(MidiDevice * device, uint8_t input) {
       }
    } else {
       //failsafe, should never happen
-//      if(device->input_count > 2)
-//      {
-//         device->input_state = IDLE;
-//      }
+      if(device->input_count > 2)
+      {
+         device->input_state = IDLE;
+      }
       if (device->input_state != IDLE) {
          //store the byte
          device->input_buffer[device->input_count] = input;
@@ -174,8 +174,6 @@ void midi_process_byte(MidiDevice * device, uint8_t input) {
          device->input_count += 1;
          switch(device->input_count%4) {
             case 3:
-//               if (device->input_state != SYSEX_MESSAGE)
-//                  device->input_state = IDLE;
                device->input_count = 1;
                //call callback
                midi_input_callbacks(device, 3,
@@ -184,8 +182,6 @@ void midi_process_byte(MidiDevice * device, uint8_t input) {
             case 2:
                if (device->input_state == TWO_BYTE_MESSAGE) {
                   device->input_count = 1;
-                  //device->input_state = IDLE;
-                  //call callback
                   midi_input_callbacks(device, 2, device->input_buffer[0], device->input_buffer[1], 0);
                }
                break;
@@ -198,7 +194,7 @@ void midi_process_byte(MidiDevice * device, uint8_t input) {
                   device->input_count = 1;
                } else {
                   //shouldn't happen
-                  //device->input_state = IDLE;
+                  device->input_state = IDLE;
                }
                break;
          }
